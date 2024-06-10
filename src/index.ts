@@ -9,6 +9,7 @@ import { prettyJSON } from 'hono/pretty-json';
 // Routes
 import { routes } from './routes';
 
+const port = Bun.env.PORT || 5001;
 
 const app = new Hono()
 
@@ -21,7 +22,4 @@ app.use(prettyJSON({ space: 4 }));
 // Routes
 app.route('/', routes);
 
-export default {
-  port: 5001, 
-  fetch: app.fetch, 
-};
+export default { port, fetch: app.fetch };
