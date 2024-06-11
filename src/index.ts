@@ -7,6 +7,8 @@ import { basicAuth } from 'hono/basic-auth';
 import { poweredBy } from 'hono/powered-by';
 import { prettyJSON } from 'hono/pretty-json';
 
+import { initDatabase } from '../config/supabase.config';
+
 // Routes
 import { routes } from './routes';
 
@@ -31,6 +33,10 @@ app.use(poweredBy());
 app.use(cors({ origin: ['*', 'https://familyapps.netlify.app', 'https://familyapps2.netlify.app'] }));
 app.use(prettyJSON({ space: 4 }));
 app.use(basicAuth(basicAuthConfig));
+
+// Database (For Production: Supabase *for now*)
+const db = initDatabase();
+console.log("Database: ", db);
 
 // Routes
 app.route('/', routes);
