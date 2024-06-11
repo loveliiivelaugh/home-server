@@ -4,26 +4,42 @@ API's, database's, and server.
 
 ## Architecture
 
-<!-- Runtime Environment -->
+- Runtime Environment
+
 Bun: [bun](https://bun.sh/)
+
 Hono: [https://hono.dev/](https://hono.dev/)
+
 TypeScript: [https://www.typescriptlang.org/](https://www.typescriptlang.org/)
-<!-- Object Relational Mapping (ORM) -->
+
+- Object Relational Mapping (ORM)
+
 Drizzle: [https://drizzle-kit.com/](https://drizzle-kit.com/)
-<!-- Database -->
+
+- Database
+
 Postgres: [https://www.postgresql.org/](https://www.postgresql.org/)
-<!-- Production Database & Deployment -->
+
+- Production Database & Deployment
+
 Supabase: [https://supabase.com/](https://supabase.com/)
-<!-- Production Server Deployment -->
+
+- Production Server Deployment
+
 Render: [https://render.com/](https://render.com/)
-<!-- Code Repository -->
+
+- Code Repository
+
 GitHub: [https://github.com/](https://github.com/)
-<!-- Security and Privacy *Keycloak*in progress* -->
+
+- Security and Privacy *Keycloak*in progress*
+
 Keycloak: [https://keycloak.org/](https://keycloak.org/)
 
 ## TODOs
-Add drizzle models and database config files for drizzle
+
 Get database routes working
+
 Get rest of Microservice frontends working
 
 ## Usage
@@ -37,5 +53,3 @@ To run:
 ```sh
 bun run dev
 ```
-
-open http://localhost:3000
