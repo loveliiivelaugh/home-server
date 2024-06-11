@@ -112,7 +112,7 @@ export const cms = {
             "name": "Fitness",
             "icon": "🏋️‍♀️",
             "link": "/",
-            "url": (Bun.env.NODE_ENV === "development") ? "http://localhost:3001" : "https://openfitness.netlify.app/",
+            "url": "https://openfitness.netlify.app/",
             "category": [
                 "Essentials"
             ],
