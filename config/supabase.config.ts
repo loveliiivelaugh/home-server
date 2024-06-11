@@ -1,6 +1,6 @@
 import { drizzle } from 'drizzle-orm/postgres-js'
 import postgres from 'postgres'
-
+import { schema } from '../db'
 
 const connectionString = process.env.SUPABASE_CONNECTION_STRING as string
 
@@ -9,7 +9,7 @@ function initDatabase() {
         console.info("Connecting to Supabase...")
 
         const client = postgres(connectionString)
-        const db = drizzle(client);
+        const db = drizzle(client, { schema });
 
         console.info("Connected to Supabase!")
         
