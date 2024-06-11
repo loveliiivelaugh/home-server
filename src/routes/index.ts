@@ -8,6 +8,7 @@ import { Context } from 'hono';
 
 // import { Component, stream } from '../components/ServerComponent';
 import { themeConfig as microservicesThemeConfig } from '../../config/theme.config';
+import { cms } from '../../config/cms';
 
 // import { schema } from '../../db';
 
@@ -19,6 +20,7 @@ const paths = {
     secrets: '/api/secrets',
     cross_platform: '/api/cross-platform',
     theme: '/api/theme/themeConfig',
+    cms: '/api/cms/content',
     database: '/database',
     users: '/users'
 };
@@ -32,6 +34,11 @@ routes.get(
     async (c: Context) => c.json(microservicesThemeConfig)
 );
 
+// Shared Microservices Content
+routes.get(
+    paths.cms, 
+    async (c: Context) => c.json(cms)
+);
 
 routes.get('/', (c: Context) => c.text('Welcome to the FamilyAppsSuite server!'));
 
