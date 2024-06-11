@@ -7,10 +7,12 @@ import { basicAuth } from 'hono/basic-auth';
 import { poweredBy } from 'hono/powered-by';
 import { prettyJSON } from 'hono/pretty-json';
 
+// Database
+import { createDatabaseMiddleware } from '../db';
 import { initDatabase } from '../config/supabase.config';
-
 // Routes
 import { routes } from './routes';
+
 
 interface BasicAuthConfig {
   username: string;
@@ -35,8 +37,7 @@ app.use(prettyJSON({ space: 4 }));
 app.use(basicAuth(basicAuthConfig));
 
 // Database (For Production: Supabase *for now*)
-const db = initDatabase();
-console.log("Database: ", db);
+app.use(createDatabaseMiddleware(initDatabase()));
 
 // Routes
 app.route('/', routes);
