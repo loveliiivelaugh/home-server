@@ -25,6 +25,7 @@ const paths = {
 
 const routes = new Hono();
 
+
 // Theme for microservices
 routes.get(
     paths.theme, 
@@ -33,5 +34,6 @@ routes.get(
 
 
 routes.get('/', (c: Context) => c.text('Welcome to the FamilyAppsSuite server!'));
+
 
 export { routes };

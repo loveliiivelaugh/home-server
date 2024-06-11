@@ -1,3 +1,9 @@
+# Family Apps Suite Server
+
+API's, database's, and server.
+
+## Usage
+
 To install dependencies:
 ```sh
 bun install
