@@ -36,7 +36,7 @@ openfitnessRoutes.get('/fitness_tables', async (c: Context) => {
     const { db } = c.var; // Get db from context
 
     try {
-        
+
         if (!db) return c.text('Database not found.');
 
         const data: any = await openfitnessScripts.getAllTables(db);

@@ -12,10 +12,22 @@ const databaseRoutes = new Hono();
  * @openapi
  * /database/read_schema:
  *   get:
- *     description: Welcome to swagger-jsdoc!
+ *     description: Gets all tables and columns for the database
  *     responses:
  *       200:
- *         description: Returns a mysterious string.
+ *         description: {
+ *             "data": [
+ *                 {
+ *                     "table_name": "table_name",
+ *                     "columns": [
+ *                         "column_name",
+ *                         "column_name",
+ *                         "column_name"
+ *                     ]
+ *                 }
+ *             ]
+ *         }
+ *  
  */
 databaseRoutes.get('/read_schema', async (c: Context) => {
     try {

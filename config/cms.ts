@@ -1,3 +1,5 @@
+const localPort = (port: string | undefined) => `http://localhost:${(port || "0000")}`;
+
 export const cms = {
     navbar: {
         title: "Family Apps",
@@ -113,6 +115,8 @@ export const cms = {
             "icon": "🏋️‍♀️",
             "link": "/",
             "url": "https://openfitness.netlify.app/",
+            "dev_url": localPort("3001"),
+            "disabled": false,
             "category": [
                 "Essentials"
             ],
@@ -125,7 +129,9 @@ export const cms = {
             "name": "AI",
             "icon": "🤖",
             "link": "/",
-            "url": "http://localhost:3002",
+            "disabled": true,
+            "url": localPort("3002"),
+            "dev_url": localPort("3002"),
             "category": [
                 "Essentials"
             ],
@@ -138,7 +144,9 @@ export const cms = {
             "name": "camera",
             "icon": "😃",
             "link": "/camera",
-            "url": "http://localhost:5175",
+            "disabled": false,
+            "url": "https://smarticamera.netlify.app/",
+            "dev_url": localPort("5174"),
             "category": [
                 "Essentials"
             ],
@@ -151,7 +159,9 @@ export const cms = {
             "name": "ChatBones",
             "icon": "💬",
             "link": "/chat-bones",
+            "disabled": true,
             "url": null,
+            "dev_url": null,
             "category": [
                 "Essentials"
             ],
@@ -164,7 +174,9 @@ export const cms = {
             "name": "eReader",
             "icon": "📚",
             "link": "/eReader",
+            "disabled": true,
             "url": null,
+            "dev_url": null,
             "category": [
                 "Essentials"
             ],
@@ -179,7 +191,9 @@ export const cms = {
             "name": "Storage",
             "icon": "😎",
             "link": "/storage",
+            "disabled": true,
             "url": null,
+            "dev_url": null,
             "category": [
                 "Essentials"
             ],
@@ -192,7 +206,9 @@ export const cms = {
             "name": "Admin Dashboard",
             "icon": "😇",
             "link": "/admin",
+            "disabled": true,
             "url": null,
+            "dev_url": null,
             "category": [
                 "Essentials"
             ],
@@ -201,5 +217,19 @@ export const cms = {
                 "admin"
             ]
         }
+    ],
+    dockerApps: [
+        { name: "Github", icon: "❤️", disabled: true }, 
+        { name: "OpenWebUI", icon: "😎", "url": localPort("3000"), disabled: true },
+        { name: "Notion", icon: "📝", disabled: true },
+        { name: "Wordpress Site", icon: "📄", "url": localPort("8000"), disabled: true },
+        { name: "Wordpress Admin", icon: "📄", "url": (localPort("8000") + "/wp-admin"), disabled: true },
+        { name: "PHP Admin", icon: "📄", "url": localPort("8080"), disabled: true },
+        { name: "PGAdmin", icon: "📄", "url": localPort("5050"), disabled: true },
+        { name: "Keycloak", icon: "📄", "url": localPort("8180"), disabled: true },
+        { name: "Perplexity", icon: "📄", "url": localPort("0000"), disabled: true },
+        { name: "Private GPT", icon: "📄", "url": localPort("0000"), disabled: true },
+        { name: "Docs", icon: "📄" },
+        { name: "Changelog", icon: "📄" },
     ]
 }

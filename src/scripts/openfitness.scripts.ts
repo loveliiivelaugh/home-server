@@ -1,3 +1,4 @@
+import { schema } from "../../db";
 
 export const openfitnessScripts = {
 
@@ -227,7 +228,7 @@ export const openfitnessScripts = {
                 table: {
                     title: "Total Food Logged",
                     columns: Object
-                        .keys(foodTable[0])
+                        .keys(schema.food)
                         .map((key) => ({ 
                             field: key, 
                             headerName: key, 
@@ -310,7 +311,7 @@ export const openfitnessScripts = {
                 table: {
                     title: "Total Exercises Logged",
                     columns: Object
-                        .keys(exerciseTable[0])
+                        .keys(schema.exercise)
                         .map((key) => ({ 
                             field: key, 
                             headerName: key, 
@@ -370,7 +371,7 @@ export const openfitnessScripts = {
                 table: {
                     title: "Total Steps Logged",
                     columns: Object
-                        .keys(stepsTable[0])
+                        .keys(schema.steps)
                         .map((key) => ({ 
                             field: key, 
                             headerName: key, 
@@ -439,7 +440,7 @@ export const openfitnessScripts = {
                 table: {
                     title: "Total Sleep Logged",
                     columns: Object
-                        .keys(sleepTable[0])
+                        .keys(schema.sleep)
                         .map((key) => ({ 
                             field: key, 
                             headerName: key, 
@@ -453,7 +454,7 @@ export const openfitnessScripts = {
                 table: {
                     title: "Total Weight Logged",
                     columns: Object
-                        .keys(weightTable[0])
+                        .keys(schema.weight)
                         .map((key) => ({ 
                             field: key, 
                             headerName: key, 
