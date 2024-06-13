@@ -111,11 +111,28 @@ export const cms = {
     },
     apps: [
         {
+            "name": "FamilyApps",
+            "icon": "😃",
+            "link": "/",
+            "url": "https://familyapps2.netlify.app/",
+            "dev_url": localPort("3000"),
+            "repo": "https://github.com/loveliiivelaugh/FamilyApps",
+            "disabled": false,
+            "category": [
+                "Essentials"
+            ],
+            "tags": [
+                "essentials",
+                "fitness"
+            ]
+        },
+        {
             "name": "Fitness",
             "icon": "🏋️‍♀️",
             "link": "/",
             "url": "https://openfitness.netlify.app/",
             "dev_url": localPort("3001"),
+            "repo": "https://github.com/loveliiivelaugh/openfitness",
             "disabled": false,
             "category": [
                 "Essentials"
@@ -129,9 +146,10 @@ export const cms = {
             "name": "AI",
             "icon": "🤖",
             "link": "/",
-            "disabled": true,
-            "url": localPort("3002"),
+            "disabled": false,
+            "url": "https://woodwardchat.netlify.app/",
             "dev_url": localPort("3002"),
+            "repo": "https://github.com/loveliiivelaugh/aichat",
             "category": [
                 "Essentials"
             ],
@@ -146,7 +164,8 @@ export const cms = {
             "link": "/camera",
             "disabled": false,
             "url": "https://smarticamera.netlify.app/",
-            "dev_url": localPort("5174"),
+            "dev_url": localPort("3003"),
+            "repo": "https://github.com/loveliiivelaugh/smartcamera",
             "category": [
                 "Essentials"
             ],
@@ -156,6 +175,7 @@ export const cms = {
             ]
         },
         {
+            // App to provide UI for CrewAI
             "name": "ChatBones",
             "icon": "💬",
             "link": "/chat-bones",
