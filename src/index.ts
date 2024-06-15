@@ -9,7 +9,7 @@ import { prettyJSON } from 'hono/pretty-json';
 import { swaggerUI } from '@hono/swagger-ui';
 
 // Database
-import { basicAuthConfig, trustedSources } from '../config/clients.config';
+import { basicAuthConfig, initApiClients, trustedSources } from '../config/clients.config';
 import { initDatabase } from '../config/supabase.config';
 import { createDatabaseMiddleware } from '../db';
 import { authMiddleware } from '../middleware';
@@ -34,6 +34,8 @@ app.use(basicAuth(basicAuthConfig));
 app.use(createDatabaseMiddleware(initDatabase()));
 // Connect to db before auth middleware for session across microservices
 app.use(authMiddleware);
+
+app.use(initApiClients());
 
 // Routes
 app.route('/', routes);

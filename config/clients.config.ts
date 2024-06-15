@@ -32,8 +32,10 @@ const paths = {
     cross_platform: '/api/cross-platform',
     theme: '/api/theme/themeConfig',
     cms: '/api/cms/content',
+    sensative: '/api/sensative',
     database: '/database',
     users: '/users'
+
 };
 
 const secrets = {
@@ -63,14 +65,23 @@ const initApiClients = () => createMiddleware(async (c, next) => {
         }
     });
 
-    const privategGptClient = axios.create({
-        baseURL: (secrets.privateGPT || `http://127.0.0.1:8001/v1`)
+    const sensativeClient = axios.create({
+        baseURL: Bun.env.PRIVATE_HOSTNAME,
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'auth-token': Bun.env.PRIVATE_SECRET
+        },
+        auth: {
+            username: (Bun.env.BASIC_AUTH_USERNAME || ""),
+            password: (Bun.env.BASIC_AUTH_PASSWORD || "")
+        }
     });
 
     const clients = {
         nutritionixClient,
         exerciseClient,
-        privategGptClient
+        sensativeClient
     };
 
     c.set('clients', clients);

@@ -68,6 +68,7 @@ databaseRoutes.get('/read_schema', async (c: Context) => {
  */
 databaseRoutes.get('/read_db', async (c: Context) => {
     const table = c.req.query('table') || 'table_name';
+    const { sensativeClient } = c.var.clients;
     const { db } = c.var;
 
     const options = {
@@ -85,7 +86,34 @@ databaseRoutes.get('/read_db', async (c: Context) => {
             ?.[table]
             .findMany(options);
 
-        return c.json(data);
+        if (table === "models") {
+            
+            let path = "api/v1/ollama/available-models";
+            const ollamaModels = (await sensativeClient.get(path)).data;
+
+            const modelNamesInDb = data.map(({ value }: { value: any }) => value);
+
+            const modelsNotAddedYet = ollamaModels.models
+                .map((ollamaModel: any) => {
+                    if (!modelNamesInDb.includes(ollamaModel.name)) 
+                        return ({
+                            // id: uuidv4(),
+                            name: ollamaModel.name,
+                            value: ollamaModel.name
+                        });
+                }).filter((value: null | undefined) => value); // Remove null or undefined values
+
+            if (modelsNotAddedYet.length) {
+                const result = await db
+                    .insert(schema.models)
+                    .values(modelsNotAddedYet)
+                    .returning();
+
+                return c.json([ ...data, ...result ]);
+            }
+            else return c.json(data);
+        }
+        else return c.json(data);
 
     } catch (error: any) {
         console.error(error);

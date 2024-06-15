@@ -4,6 +4,7 @@ import { Context } from 'hono';
 import { openfitnessRoutes } from "./openfitness.routes";
 import { databaseRoutes } from "./database.routes";
 import { privateGptRoutes } from './privategpt.routes';
+import { sensativeRoutes } from './sensative.routes';
 
 import { themeConfig as microservicesThemeConfig } from '../../config/theme.config';
 import { paths } from '../../config/clients.config';
@@ -28,6 +29,7 @@ routes.get(
 routes.route(paths.database, databaseRoutes);
 routes.route(paths.privategpt, privateGptRoutes);
 routes.route(paths.openfitness, openfitnessRoutes);
+routes.route(paths.sensative, sensativeRoutes)
 
 routes.get(
     '/', 
