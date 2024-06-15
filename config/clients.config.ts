@@ -2,9 +2,30 @@ import axios from 'axios';
 import { createMiddleware } from 'hono/factory';
 
 
+interface BasicAuthConfig {
+    username: string;
+    password: string;
+}
+
+const basicAuthConfig = <BasicAuthConfig>{
+    username: Bun.env.BASIC_AUTH_USERNAME,
+    password: Bun.env.BASIC_AUTH_PASSWORD,
+};
+
+const trustedSources = [
+    Bun.env.FAMILYAPPS_HOSTNAME,
+    Bun.env.OPENFITNESS_HOSTNAME,
+    Bun.env.SMARTCAMERA_HOSTNAME,
+    Bun.env.AICHAT_HOSTNAME,
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://localhost:3002',
+    'http://localhost:3003',
+];
+
 // Single source of truth for all paths
-const paths = { 
-    github: '/api/github', 
+const paths = {
+    github: '/api/github',
     openfitness: '/api/openfitness',
     privategpt: '/api/privategpt',
     secrets: '/api/secrets',
@@ -57,4 +78,9 @@ const initApiClients = () => createMiddleware(async (c, next) => {
     await next();
 });
 
-export { initApiClients, paths };
+export { 
+    initApiClients, 
+    paths,
+    basicAuthConfig,
+    trustedSources 
+};

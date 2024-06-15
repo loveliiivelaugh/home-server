@@ -38,11 +38,11 @@ Keycloak: [https://keycloak.org/](https://keycloak.org/)
 
 ## Supported Microservices
 
-FamilyApps: [FamilyApps](https://familyapps2.netlify.app/)
+FamilyApps: [FamilyApps]()
 
 - App Hub / Launchpad
 
-OpenFitness: [Open Fitness](https://openfitness.netlify.app/)
+OpenFitness: [Open Fitness]()
 
 - Fitness + Nutrition Tracking
 
@@ -50,15 +50,9 @@ AiChat: [AiChat]()
 
 - Multi Modal interface to interact with open source LLMs
 
-SmartCamera: [Smart Camera](https://smartcamera.netlify.app/)
+SmartCamera: [Smart Camera]()
 
 - Web app supporting AI embedded camera functionality
-
-## TODOs
-
-Get database routes working
-
-Get rest of Microservice frontends working
 
 ## Usage
 
