@@ -21,6 +21,21 @@ export const cms = {
         subtitle: "Family Apps Blog",
         footerText: "© Copyright 2024. All Rights Reserved.",
     },
+    openfitness: {
+        title: "OpenFitness",
+        subtitle: "Fitness Tracker. Private. Locally. ",
+        topics: [
+            "Weight",
+            "Food",
+            "Exercise",
+            "Profile",
+            "Sleep",
+            "Steps",
+            "Ai",
+            // "Planning",
+            // "Settings"
+        ]
+    },
     ai_chat: {
         title: "Chat",
         subtitle: "Ask me anything. I'll do my best to answer.",

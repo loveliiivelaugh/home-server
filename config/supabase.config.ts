@@ -27,7 +27,7 @@ function initDatabase() {
 
     } catch (error) {
         
-        console.error("Error connecting to Supabase", error);
+        console.error(error, "Error connecting to Supabase");
         return error;
     }
 };

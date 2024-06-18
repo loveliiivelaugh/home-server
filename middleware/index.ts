@@ -25,7 +25,7 @@ const authMiddleware = createMiddleware(async (c: Context, next: Next) => {
         else await next();
 
     } catch (error) {
-        console.log("authMiddleware: ERROR: ", error)
+        console.error(error, "authMiddleware: ERROR: ")
         c.status(401);
         return c.text("Unauthorized");
     }

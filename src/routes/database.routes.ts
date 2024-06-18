@@ -14,20 +14,6 @@ const databaseRoutes = new Hono();
  *   get:
  *     description: Gets all tables and columns for the database
  *     responses:
- *       200:
- *         description: {
- *             "data": [
- *                 {
- *                     "table_name": "table_name",
- *                     "columns": [
- *                         "column_name",
- *                         "column_name",
- *                         "column_name"
- *                     ]
- *                 }
- *             ]
- *         }
- *  
  */
 databaseRoutes.get('/read_schema', async (c: Context) => {
     try {
@@ -50,21 +36,7 @@ databaseRoutes.get('/read_schema', async (c: Context) => {
  * /database/read_db:
  *   get:
  *     summary: Returns stuff
- *     tags: [database]
  *     responses:
- *       200:
- *         description: A JSON array
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                   name:
- *                     type: string
  */
 databaseRoutes.get('/read_db', async (c: Context) => {
     const table = c.req.query('table') || 'table_name';
@@ -122,7 +94,13 @@ databaseRoutes.get('/read_db', async (c: Context) => {
     }
 });
 
-
+/**
+ * @swagger
+ * /database/read_db:
+ *   get:
+ *     summary: Returns stuff
+ *     responses:
+ */
 // For aichat app to query the conversation history ...
 // ... given the chat session id
 databaseRoutes.get('/read_one_row', async (c: Context) => {
@@ -156,5 +134,67 @@ databaseRoutes.get('/read_one_row', async (c: Context) => {
     }
 });
 
+/**
+ * @swagger
+ * /database/create_row:
+ *   get:
+ *     summary: Returns stuff
+ *     tags: [database]
+ *     responses:
+ */ 
+databaseRoutes.post('/create_row', async (c: Context) => {
+    const table = c.req.query('table');
+    const { db } = c.var;
+    const tableSchema = schema[table as keyof typeof schema];
+    const payload = await c.req.parseBody();
+
+    try {
+        // console.log("/create_row request: ", table, c.body)
+        const data = await db
+            .insert(tableSchema)
+            .values(payload)
+            .returning();
+
+        // console.log("/create_row data: ", data)
+
+        return c.json(data);
+        
+    } catch (error: any) {
+        console.error(error)
+        
+        return c.json(error)
+    }
+});
+
+/**
+ * @swagger
+ * /database/write_db:
+ *   get:
+ *     summary: Add stuff
+ *     responses:
+ */
+databaseRoutes.post('/write_db', async (c: Context) => {
+    const table = c.req.query('table');
+    const { db } = c.var;
+    const tableSchema = schema[table as keyof typeof schema];
+    const payload = await c.req.json();
+
+    try {
+        console.log("/database/create_row request: ", table, payload)
+        const data = await db
+            .insert(tableSchema)
+            .values(payload)
+            .returning();
+
+        console.log("/database/create_row data: ", data)
+
+        return c.json(data);
+        
+    } catch (error: any) {
+        console.error(error, "Error while writing to table: ", table);
+        
+        return c.json(error);
+    }
+});
 
 export { databaseRoutes };

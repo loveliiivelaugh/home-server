@@ -18,26 +18,13 @@ const openfitnessRoutes = new Hono();
  *     description: Gets all tables for OpenFitness and formats and organizes them
  *       for the front end to display in visualizations.
  *     responses:
- *       200:
- *         description: {
- *             "data": [
- *                 {
- *                     "table_name": "table_name",
- *                     "columns": [
- *                         "column_name",
- *                         "column_name",
- *                         "column_name"
- *                     ]
- *                 }
- *             ]
- *         }
  */
 openfitnessRoutes.get('/fitness_tables', async (c: Context) => {
     const { db } = c.var; // Get db from context
 
-    try {
+    if (!db) return c.text('Database not found.');
 
-        if (!db) return c.text('Database not found.');
+    try {
 
         const data: any = await openfitnessScripts.getAllTables(db);
 

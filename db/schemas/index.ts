@@ -153,7 +153,8 @@ const profile = pgTable('profile', {
 const cross_platform_apps = pgTable('cross_platform_apps', {
   id: serial('id').primaryKey(),
   created_at: timestamp('created_at').notNull().defaultNow(),
-  name: text('name'),
+  desitination_url: text('destination_url'),
+  desitination_app: text('destination_app'),
   url: text('url'),
   user_id: uuid('user_id'),
   source: text('source'),

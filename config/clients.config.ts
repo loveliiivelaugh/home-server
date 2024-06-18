@@ -27,11 +27,15 @@ const trustedSources = [
 const paths = {
     github: '/api/github',
     openfitness: '/api/openfitness',
+    aichat: '/api/aichat',
     privategpt: '/api/privategpt',
     secrets: '/api/secrets',
+
+    appConfig: '/api/appConfig', // appConfig route includes cross_platform, theme, and cms routes data
     cross_platform: '/api/cross-platform',
     theme: '/api/theme/themeConfig',
     cms: '/api/cms/content',
+
     sensative: '/api/sensative',
     database: '/database',
     users: '/users'
