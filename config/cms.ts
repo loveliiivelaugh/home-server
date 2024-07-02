@@ -189,72 +189,74 @@ export const cms = {
                 "ai"
             ]
         },
-        {
-            // App to provide UI for CrewAI
-            "name": "ChatBones",
-            "icon": "💬",
-            "link": "/chat-bones",
-            "disabled": true,
-            "url": null,
-            "dev_url": null,
-            "category": [
-                "Essentials"
-            ],
-            "tags": [
-                "essentials",
-                "ai"
-            ]
-        },
-        {
-            "name": "eReader",
-            "icon": "📚",
-            "link": "/eReader",
-            "disabled": true,
-            "url": null,
-            "dev_url": null,
-            "category": [
-                "Essentials"
-            ],
-            "tags": [
-                "essentials",
-                "ai",
-                "eReader",
-                "books"
-            ]
-        },
-        {
-            "name": "Storage",
-            "icon": "😎",
-            "link": "/storage",
-            "disabled": true,
-            "url": null,
-            "dev_url": null,
-            "category": [
-                "Essentials"
-            ],
-            "tags": [
-                "essentials",
-                "storage"
-            ]
-        },
-        {
-            "name": "Admin Dashboard",
-            "icon": "😇",
-            "link": "/admin",
-            "disabled": true,
-            "url": null,
-            "dev_url": null,
-            "category": [
-                "Essentials"
-            ],
-            "tags": [
-                "essentials",
-                "admin"
-            ]
-        }
+
+        // TODO: Hide/Disable following apps for production
+        // {
+        //     // App to provide UI for CrewAI
+        //     "name": "ChatBones",
+        //     "icon": "💬",
+        //     "link": "/chat-bones",
+        //     "disabled": true,
+        //     "url": null,
+        //     "dev_url": null,
+        //     "category": [
+        //         "Essentials"
+        //     ],
+        //     "tags": [
+        //         "essentials",
+        //         "ai"
+        //     ]
+        // },
+        // {
+        //     "name": "eReader",
+        //     "icon": "📚",
+        //     "link": "/eReader",
+        //     "disabled": true,
+        //     "url": null,
+        //     "dev_url": null,
+        //     "category": [
+        //         "Essentials"
+        //     ],
+        //     "tags": [
+        //         "essentials",
+        //         "ai",
+        //         "eReader",
+        //         "books"
+        //     ]
+        // },
+        // {
+        //     "name": "Storage",
+        //     "icon": "😎",
+        //     "link": "/storage",
+        //     "disabled": true,
+        //     "url": null,
+        //     "dev_url": null,
+        //     "category": [
+        //         "Essentials"
+        //     ],
+        //     "tags": [
+        //         "essentials",
+        //         "storage"
+        //     ]
+        // },
+        // {
+        //     "name": "Admin Dashboard",
+        //     "icon": "😇",
+        //     "link": "/admin",
+        //     "disabled": false,
+        //     "url": null,
+        //     "dev_url": null,
+        //     "category": [
+        //         "Essentials"
+        //     ],
+        //     "tags": [
+        //         "essentials",
+        //         "admin"
+        //     ]
+        // }
     ],
     dockerApps: [
-        { name: "Github", icon: "❤️", disabled: true }, 
+        { name: "Github", icon: "❤️", disabled: true },  // disable for production
         { name: "OpenWebUI", icon: "😎", "url": localPort("3000"), disabled: true },
         { name: "Notion", icon: "📝", disabled: true },
         { name: "Wordpress Site", icon: "📄", "url": localPort("8000"), disabled: true },

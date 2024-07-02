@@ -9,7 +9,7 @@ const {
     SUPABASE_PUBLIC_KEY: supabaseAnonKey,
 } = Bun.env;
 
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+const supabase = createClient(supabaseUrl as string, supabaseAnonKey as string);
 
 
 const connectionString = process.env.SUPABASE_CONNECTION_STRING as string

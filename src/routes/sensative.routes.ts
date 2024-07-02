@@ -1,12 +1,13 @@
 import { Hono } from 'hono';
 import { Context } from 'hono';
 
+import { handleAdminOnly } from '../../middleware';
+
 
 const sensativeRoutes = new Hono();
 
-
 sensativeRoutes
-    .get('/', async (c: Context) => {
+    .get('/', handleAdminOnly, async (c: Context) => {
         const { sensativeClient } = c.var.clients;
         const endpoint = (c.req.query('endpoint') || "");
 
@@ -14,7 +15,8 @@ sensativeRoutes
 
         let allowablePaths = [
             "/api/v1/ollama/available-models",
-            "/api/privategpt/list-ingested-files"
+            "/api/privategpt/list-ingested-files",
+            "/api/github"
         ];
 
         if (allowablePaths.includes(endpoint)) try {
@@ -28,7 +30,7 @@ sensativeRoutes
         }
         else return c.json('Path not allowed');
     })
-    .post('/', async (c: Context) => {
+    .post('/', handleAdminOnly, async (c: Context) => {
         const { sensativeClient } = c.var.clients;
         const endpoint = (c.req.query('endpoint') || "");
         const payload = await c.req.json();

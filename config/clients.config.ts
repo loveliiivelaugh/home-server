@@ -12,22 +12,28 @@ const basicAuthConfig = <BasicAuthConfig>{
     password: Bun.env.BASIC_AUTH_PASSWORD,
 };
 
-const trustedSources = [
-    Bun.env.FAMILYAPPS_HOSTNAME,
-    Bun.env.OPENFITNESS_HOSTNAME,
-    Bun.env.SMARTCAMERA_HOSTNAME,
-    Bun.env.AICHAT_HOSTNAME,
+const trustedSources: string[] = [
+    Bun.env.FAMILYAPPS_HOSTNAME as string,
+    Bun.env.OPENFITNESS_HOSTNAME as string,
+    Bun.env.SMARTCAMERA_HOSTNAME as string,
+    Bun.env.AICHAT_HOSTNAME as string,
     'http://localhost:3000',
     'http://localhost:3001',
     'http://localhost:3002',
     'http://localhost:3003',
 ];
 
+const corsConfig = {
+    origin: trustedSources, 
+    credentials: true
+};
+
 // Single source of truth for all paths
 const paths = {
     github: '/api/github',
     openfitness: '/api/openfitness',
     aichat: '/api/aichat',
+    camera: '/api/camera',
     privategpt: '/api/privategpt',
     secrets: '/api/secrets',
 
@@ -45,13 +51,12 @@ const paths = {
 const secrets = {
     nutritionix_app_id: Bun.env.NUTRITIONIX_APP_ID,
     nutritionix_key: Bun.env.NUTRITIONIX_KEY,
-    api_ninjas_key: Bun.env.API_NINJAS_KEY,
-    privateGPT: 'http://127.0.0.1:8001/v1'
-}
+    api_ninjas_key: Bun.env.API_NINJAS_KEY
+};
 
 // Initialize external API clients with secrets
 const initApiClients = () => createMiddleware(async (c, next) => {
-
+    // upgradeWebSocket experimental to handle websocket traffic
 
     const nutritionixClient = axios.create({
         baseURL: `https://trackapi.nutritionix.com/v2`,
@@ -97,5 +102,6 @@ export {
     initApiClients, 
     paths,
     basicAuthConfig,
-    trustedSources 
+    corsConfig,
+    trustedSources
 };

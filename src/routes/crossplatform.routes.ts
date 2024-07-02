@@ -2,6 +2,8 @@ import { Hono } from "hono";
 import { Context } from "hono";
 
 import { schema } from "../../db";
+import { supabase } from "../../config/supabase.config";
+import { eq } from "drizzle-orm";
 
 
 const crossPlatformRoutes = new Hono();
@@ -32,12 +34,14 @@ crossPlatformRoutes
         try {
 
             console.log("crossplatform.routes.post: ", data)
-            // use the data to add a new message to a chat ...
+            // When SmartCamera is routing back to AIChat ...
+            // ... use the data to add a new message to a chat ...
             // ... when sending an image from camera to aichat
             if (
                 (data.appId === "camera") 
-                && (data.data.crossPlatformState.appId === "AI")
+                && (data.data?.crossPlatformState.appId === "AI")
             ) {
+                // Create a message payload
                 const payload = {
                     id: data.data.crossPlatformState.data.chatStoreData.activeChat.id,
                     message: {
@@ -48,8 +52,9 @@ crossPlatformRoutes
                         time: new Date().toLocaleTimeString(),
                         ...data.data.cameraStoreData,
                         text: data.data.cameraStoreData.message
-                    },
+                    }
                 };
+                
                 const response = await sensativeClient.post('/api/aichat/postChat', payload);
                 console.log("response: ", response)
             };
@@ -59,11 +64,13 @@ crossPlatformRoutes
                 .values(data)
                 .returning();
 
-            return c.json(result)
+            const redirect = data.destination_url + `/cross_platform?id=${result[0].id}`;
+            
+            return c.json({...result, redirect}, 200);
 
         } catch (error: any) {
             
-            return c.json(error);
+            return c.json(error, 500);
         }
     })
 
@@ -71,20 +78,19 @@ crossPlatformRoutes
         const { db } = c.var;
         const id = c.req.query('id')
 
-        try {
+        if (id) try {
             const result = await db
-                .query
-                .cross_platform_apps
-                .delete()
-                .where({ id })
+                .delete(schema.cross_platform_apps)
+                .where(eq(schema.cross_platform_apps.id, parseInt(id)))
                 .returning();
 
-            return c.json(result);
+            return c.json(result, 201);
 
         } catch (error: any) {
 
-            return c.json(error);
+            return c.json(error, 500);
         }
+        else return c.json('Missing CPX row ID', 500);
     });
 
 

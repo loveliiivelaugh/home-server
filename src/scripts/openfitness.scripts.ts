@@ -142,7 +142,7 @@ export const openfitnessScripts = {
         for (let i = 6; i >= 0; i--) {
             const date = new Date(today);
             date.setDate(today.getDate() - i);
-            xAxis[0].data.push(date.getDate());
+            xAxis[0].data.push(date.getDate() as never);
         }
 
         const chartsData = {
@@ -154,7 +154,11 @@ export const openfitnessScripts = {
                         .map((key) => ({ 
                             field: key, 
                             headerName: key, 
-                            width: 150 
+                            width: 150,
+                            ...["goal", "exercise"]
+                                .includes(key) && { 
+                                    valueGetter: (input: any) => input + ":custom-render"
+                                }
                         })),
                     rows: profileTable
                 }

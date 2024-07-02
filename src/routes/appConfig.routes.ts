@@ -17,16 +17,18 @@ appConfigRoutes
                 .query
                 .cross_platform_apps
                 .findMany();
+            
+            // Should be able to filter by cpx id
 
             return c.json({
                 cms,
                 themeConfig,
                 crossPlatformStateTable: result
-            });
+            }, 200);
 
         } catch (error: any) {
 
-            return c.json(error);
+            return c.json(error, 500);
         }
     });
 
