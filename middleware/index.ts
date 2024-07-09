@@ -23,6 +23,7 @@ const authMiddleware = createMiddleware(async (c: Context, next: Next) => {
         ? await verify(jwt, Bun.env.JWT_SECRET as string) 
         : null;
 
+    console.log("decodedPayload: ", decodedPayload)
     c.set("jwtPayload", decodedPayload);
 
     // Check isAuthorized

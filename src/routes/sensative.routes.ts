@@ -16,10 +16,13 @@ sensativeRoutes
         let allowablePaths = [
             "/api/v1/ollama/available-models",
             "/api/privategpt/list-ingested-files",
-            "/api/github"
+            "/api/github",
+            "/database/read_schema",
+            "/database/read_db",
+            "/database/read_one_row",
         ];
 
-        if (allowablePaths.includes(endpoint)) try {
+        if (allowablePaths.includes(endpoint) || allowablePaths.some(path => endpoint.startsWith(path))) try {
             const data = (await sensativeClient.get(endpoint)).data;
 
             return c.json(data);
@@ -38,10 +41,13 @@ sensativeRoutes
         console.info("sensativeRoutes:POST --> ", endpoint, payload)
 
         let allowablePaths = [
-            "/api/aichat/postChat"
+            "/api/aichat/postChat",
+            "/api/v1/camera/document",
+            "/database/create_row",
+            "/database/write_db",
         ];
 
-        if (allowablePaths.includes(endpoint)) try {
+        if (allowablePaths.includes(endpoint) || allowablePaths.some(path => endpoint.startsWith(path))) try {
             const data = (await sensativeClient.post(endpoint, payload)).data;
 
             return c.json(data);

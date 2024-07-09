@@ -124,6 +124,14 @@ export const cms = {
             },
         ],
     },
+
+    netlifyBadges: {
+        "familyApps": `[![Netlify Status](https://api.netlify.com/api/v1/badges/1edf639c-503b-483c-ae7c-8518dcb9db10/deploy-status)](https://app.netlify.com/sites/familyapps2/deploys)`,
+        "homeServer": `Deployed on Render`,
+        "openFitness": `[![Netlify Status](https://api.netlify.com/api/v1/badges/17584298-1ea6-4693-88ca-dcc04f60f1be/deploy-status)](https://app.netlify.com/sites/openfitness/deploys)`,
+        "aiChat": `[![Netlify Status](https://api.netlify.com/api/v1/badges/e66cd036-f62c-4452-9344-4441af1cd6f4/deploy-status)](https://app.netlify.com/sites/woodwardchat/deploys)`,
+        "smartCamera": `[![Netlify Status](https://api.netlify.com/api/v1/badges/b5eb9323-f7ec-483d-a349-f0b257f5e550/deploy-status)](https://app.netlify.com/sites/smarticamera/deploys)`
+    },
     apps: [
         {
             "name": "FamilyApps",

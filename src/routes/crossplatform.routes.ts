@@ -39,16 +39,16 @@ crossPlatformRoutes
             // ... when sending an image from camera to aichat
             if (
                 (data.appId === "camera") 
-                && (data.data?.crossPlatformState.appId === "AI")
+                && (data?.data?.crossPlatformState.data?.aichatStore)
             ) {
                 // Create a message payload
                 const payload = {
-                    id: data.data.crossPlatformState.data.chatStoreData.activeChat.id,
+                    id: data.data.crossPlatformState.data.aichatStore.activeChat.id,
                     message: {
                         date: new Date().toLocaleDateString(),
                         model: 'llava:7b-v1.6',
                         sender: "user",
-                        session_id: data.data.crossPlatformState.data.chatStoreData.activeChat.session_id,
+                        session_id: data.data.crossPlatformState.data.aichatStore.activeChat.session_id,
                         time: new Date().toLocaleTimeString(),
                         ...data.data.cameraStoreData,
                         text: data.data.cameraStoreData.message

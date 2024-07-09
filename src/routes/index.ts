@@ -7,6 +7,8 @@ import { databaseRoutes } from "./database.routes";
 import { sensativeRoutes } from './sensative.routes';
 import { appConfigRoutes } from './appConfig.routes';
 import { cameraRoutes } from './camera.routes';
+import { notionRoutes } from './notion.routes';
+import { userRoutes } from './user.routes';
 // experimental
 import { googleRoutes } from './google.routes';
 
@@ -37,7 +39,9 @@ routes.route(paths.database, databaseRoutes);
 routes.route(paths.appConfig, appConfigRoutes);
 routes.route(paths.sensative, sensativeRoutes);
 routes.route(paths.openfitness, openfitnessRoutes);
+routes.route('/api/v1/notion', notionRoutes);
 routes.route(paths.cross_platform, crossPlatformRoutes);
+routes.route(paths.users, userRoutes);
 routes.get('/auth/v1/user', async (c: Context) => {
     const decodedJwt = c.get('jwtPayload');
     try {

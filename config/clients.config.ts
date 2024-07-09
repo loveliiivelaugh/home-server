@@ -1,5 +1,8 @@
 import axios from 'axios';
 import { createMiddleware } from 'hono/factory';
+import { Client } from '@notionhq/client';
+
+const notion = new Client({ auth: Bun.env.NOTION_API_KEY });
 
 
 interface BasicAuthConfig {
@@ -20,11 +23,21 @@ const trustedSources: string[] = [
     'http://localhost:3000',
     'http://localhost:3001',
     'http://localhost:3002',
-    'http://localhost:3003',
+    'http://localhost:3003'
+];
+
+const allowedHeaders: string[] = [
+    'authorization', 
+    'auth-token',
+    'Content-Type'
 ];
 
 const corsConfig = {
     origin: trustedSources, 
+    allowHeaders: allowedHeaders,
+    allowMethods: ['POST', 'GET', 'PUT', 'DELETE', 'OPTIONS'],
+    exposeHeaders: ['Content-Length'],
+    maxAge: 600,
     credentials: true
 };
 
@@ -44,9 +57,35 @@ const paths = {
 
     sensative: '/api/sensative',
     database: '/database',
-    users: '/users'
-
+    users: '/auth/v1'
 };
+
+// Export to CMS to import into Microservices routers
+const pathsArray = [
+    {
+        name: "home",
+        path: "",
+        methods: ["get", "post", "put", "delete"],
+        roles: []
+    },
+    {
+        name: "users",
+        path: "/auth/v1/users",
+        methods: ["get", "post", "put", "delete"], // Methods supported for path
+        role: []
+    },
+];
+
+// ?? This function is to be used in the Microservices Request Clients
+// const queries = pathsArray.map((route) => ({
+//     ...route.methods.map((method: string) => {
+//         [`${method}${route.name}Query`] = {
+//             queryKey: [`${method}${route.name}`],
+//             queryFn: async (payload: any | undefined) => await (client as any)[method](route.path, payload),
+//         }
+//     }).flat()
+// })).flat();
+
 
 const secrets = {
     nutritionix_app_id: Bun.env.NUTRITIONIX_APP_ID,
@@ -90,7 +129,8 @@ const initApiClients = () => createMiddleware(async (c, next) => {
     const clients = {
         nutritionixClient,
         exerciseClient,
-        sensativeClient
+        sensativeClient,
+        notionClient: notion
     };
 
     c.set('clients', clients);

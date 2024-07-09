@@ -2,6 +2,7 @@
 import { Hono } from 'hono';
 import { Context } from 'hono';
 import { validator } from 'hono/validator'
+import { eq } from 'drizzle-orm';
 // import { zValidator } from '@hono/zod-validator'
 
 import { schema } from '../../db';
@@ -91,34 +92,6 @@ databaseRoutes.get('/read_db', async (c: Context) => {
         // )
         // else 
         return c.json(data, 201);
-        // if (table === "models") {
-            
-        //     let path = "api/v1/ollama/available-models";
-        //     const ollamaModels = (await sensativeClient.get(path)).data;
-
-        //     const modelNamesInDb = data.map(({ value }: { value: any }) => value);
-
-        //     const modelsNotAddedYet = ollamaModels.models
-        //         .map((ollamaModel: any) => {
-        //             if (!modelNamesInDb.includes(ollamaModel.name)) 
-        //                 return ({
-        //                     // id: uuidv4(),
-        //                     name: ollamaModel.name,
-        //                     value: ollamaModel.name
-        //                 });
-        //         }).filter((value: null | undefined) => value); // Remove null or undefined values
-
-        //     if (modelsNotAddedYet.length) {
-        //         const result = await db
-        //             .insert(schema.models)
-        //             .values(modelsNotAddedYet)
-        //             .returning();
-
-        //         return c.json([ ...data, ...result ]);
-        //     }
-        //     else return c.json(data);
-        // }
-        // else return c.json(data);
 
     } catch (error: any) {
         console.error(error);
@@ -167,6 +140,37 @@ databaseRoutes.get('/read_one_row', async (c: Context) => {
     }
 });
 
+/**
+ * @swagger
+ * /database/updae_db:
+ *   get:
+ *     summary: Returns stuff
+ *     tags: [database]
+ *     responses:
+ */ 
+databaseRoutes.put('/update_db', async (c: Context) => {
+    const { db } = c.var;
+    const payload = await c.req.json();
+    const tableSchema = schema[payload.table as keyof typeof schema];
+
+    try {
+        console.log("/create_row request: ", payload)
+        const data = await db
+            .update(tableSchema)
+            .set({ messages: payload.messages }) // todo: future update this to be dynamic
+            .where(eq((tableSchema as any).session_id, payload.session_id))
+            .returning();
+
+        // console.log("/create_row data: ", data)
+
+        return c.json(data, 201);
+        
+    } catch (error: any) {
+        console.error(error.message, "Error updating database");
+        
+        return c.json(error, 500);
+    };
+});
 
 // !! DEPRECATED !!
 /**
@@ -181,10 +185,10 @@ databaseRoutes.post('/create_row', async (c: Context) => {
     const table = c.req.query('table');
     const { db } = c.var;
     const tableSchema = schema[table as keyof typeof schema];
-    const payload = await c.req.parseBody();
+    const payload = await c.req.json();
 
     try {
-        // console.log("/create_row request: ", table, c.body)
+        console.log("/create_row request: ", table, payload)
         const data = await db
             .insert(tableSchema)
             .values(payload)
