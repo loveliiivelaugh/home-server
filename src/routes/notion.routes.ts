@@ -2,13 +2,14 @@ import { Hono } from "hono";
 import { Context } from "hono";
 
 
-const buildMarkdown = async ({ notionPage, notionPageContent }: any) => {
+const buildMarkdown = async ({ notionPageContent }: any) => {
     const { results } = notionPageContent;
-    const { properties } = notionPage;
 
-    console.log('buildMarkdown: ', { notionPage, notionPageContent })
-    const result = [
-        `Last updated: ${new Date(results[0]?.last_edited_time).toLocaleDateString()} @ ${new Date(results[0]?.last_edited_time).toLocaleTimeString()}`,
+    const date = new Date(results[0]?.last_edited_time).toLocaleDateString();
+    const time = new Date(results[0]?.last_edited_time).toLocaleTimeString();
+
+    return [
+        `Last updated: ${date} @ ${time}`,
         ...results
             .map((content: any) => {
                 const text = content?.paragraph?.rich_text
@@ -18,8 +19,14 @@ const buildMarkdown = async ({ notionPage, notionPageContent }: any) => {
             })
             .filter(Boolean)
     ].join('\n\n');
-    
-    return result;
+};
+
+async function extractImages({ notionPageContent }: any) {
+    const { results } = notionPageContent;
+
+    return results
+        .map((content: any) => content?.image?.file?.url)
+        .filter(Boolean);
 };
 
 
@@ -32,15 +39,15 @@ notionRoutes.get('/', async (c: Context) => {
     const pageId = '356fc8dd-2460-47a2-bd0f-860713427d30';
     
     try {
-        const notionPage = await notionClient.pages.retrieve({ page_id: pageId });
         const notionPageContent = await notionClient.blocks.children.list({
             block_id: pageId,
             page_size: 50,
         });
         
-        const markdown = await buildMarkdown({ notionPage, notionPageContent });
+        const markdown = await buildMarkdown({ notionPageContent });
+        const images = await extractImages({ notionPageContent });
 
-        return c.json({ markdown });
+        return c.json({ markdown, images });
 
     } catch (error: any) {
         console.error(error?.message);

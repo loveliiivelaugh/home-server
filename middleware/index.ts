@@ -23,7 +23,6 @@ const authMiddleware = createMiddleware(async (c: Context, next: Next) => {
         ? await verify(jwt, Bun.env.JWT_SECRET as string) 
         : null;
 
-    console.log("decodedPayload: ", decodedPayload)
     c.set("jwtPayload", decodedPayload);
 
     // Check isAuthorized
@@ -35,7 +34,6 @@ const authMiddleware = createMiddleware(async (c: Context, next: Next) => {
 
         const { user } = (await supabase.auth.getUser(decodedPayload?.sub as string)).data;
 
-        console.log("supabase user after using jwt sub: ", user)
         const isAuthenticated = ((user as { aud: string })?.aud === "authenticated");
 
         if (!isAuthenticated || !isAuthorized) {
