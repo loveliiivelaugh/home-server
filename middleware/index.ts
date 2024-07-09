@@ -35,6 +35,7 @@ const authMiddleware = createMiddleware(async (c: Context, next: Next) => {
 
         const { user } = (await supabase.auth.getUser(decodedPayload?.sub as string)).data;
 
+        console.log("supabase user after using jwt sub: ", user)
         const isAuthenticated = ((user as { aud: string })?.aud === "authenticated");
 
         if (!isAuthenticated || !isAuthorized) {

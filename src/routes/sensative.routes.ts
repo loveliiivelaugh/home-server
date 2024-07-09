@@ -20,6 +20,7 @@ sensativeRoutes
             "/database/read_schema",
             "/database/read_db",
             "/database/read_one_row",
+            "/api/v1/local"
         ];
 
         if (allowablePaths.includes(endpoint) || allowablePaths.some(path => endpoint.startsWith(path))) try {

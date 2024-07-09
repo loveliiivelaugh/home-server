@@ -6,6 +6,7 @@ const buildMarkdown = async ({ notionPage, notionPageContent }: any) => {
     const { results } = notionPageContent;
     const { properties } = notionPage;
 
+    console.log('buildMarkdown: ', { notionPage, notionPageContent })
     const result = [
         `Last updated: ${new Date(results[0]?.last_edited_time).toLocaleDateString()} @ ${new Date(results[0]?.last_edited_time).toLocaleTimeString()}`,
         ...results
