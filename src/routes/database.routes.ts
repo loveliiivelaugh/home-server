@@ -217,17 +217,20 @@ databaseRoutes
     .post('/write_db', validator('json', (value: any, c: Context) => {
         // Validations on the server side for POST requests
         const table = c.req.query('table');
+        const decodedJwt = c.get('jwtPayload');
 
         if (value?.created_at) delete value.created_at; // Supabase will autopopulate this field
 
         const formattedValues = {
             ...value,
             id: parseInt(value.id),
-            weight: parseInt(value.weight)
+            weight: parseInt(value.weight),
+            user_id: decodedJwt?.user_id // using User that is logged in
         };
 
-        const parsed = (validationMap[table as keyof typeof validationMap] as any).safeParse(formattedValues);
-        
+        const parsed = (validationMap[table as keyof typeof validationMap] as any)
+            .safeParse(formattedValues);
+
         if (!parsed.success) return c.text('Invalid!', 401);
 
         return parsed.data;

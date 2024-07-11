@@ -199,6 +199,22 @@ export const cms = {
         },
 
         // TODO: Hide/Disable following apps for production
+        // { 
+        //     "name": "Photos", 
+        //     "icon": "📷",
+        //     // "link": "/photos",
+        //     "disabled": false,
+        //     // "url": Bun.env.SMARTCAMERA_HOSTNAME,
+        //     // "dev_url": localPort("3003"),
+        //     // "repo": "https://github.com/loveliiivelaugh/smartcamera",
+        //     "category": [
+        //         "Essentials"
+        //     ],
+        //     "tags": [
+        //         "essentials",
+        //         "photos"
+        //     ]
+        // },
         // {
         //     // App to provide UI for CrewAI
         //     "name": "ChatBones",
